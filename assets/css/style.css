@@ -1,0 +1,62 @@
+@font-face {
+    font-family: Seinfeld;
+    src: url(GLECB.ttf);
+    }
+
+.main-pic {
+    border: 1px solid; 
+    display: block; 
+    margin-left: auto; 
+    margin-right:auto;
+    width: 500px;
+    height: auto;
+    cursor: pointer;
+}
+
+body {
+    background: url(../images/background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h1 {
+    font-family: Seinfeld;
+    font-style: italic;
+    font-size: 60px;
+    color: rgb(63, 127, 236);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    letter-spacing: 5px;
+}
+
+h2, h3 {
+    text-align: center;
+    width: 500px;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+
+
+p {
+    text-align: center;
+}
+
+#container {
+    margin-top: 40px; 
+    margin-bottom: 40px; 
+    border: solid 1px; 
+    padding: 20px; 
+    background-color: rgba(208, 208, 209, 0.925);
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 760px;
+    height: 550px;
+    display: block;
+    
+}
+
+#question {
+    margin-top: -20px;
+}
