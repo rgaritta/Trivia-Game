@@ -1,20 +1,22 @@
 var theme = new Audio('assets/audio/theme.mp3');
 var questionNumber = 0;
 var questionsRight = 0;
+var counter = 10;
+var next = 3;
+var intervalID;
 
+//game object containing audio, images, questions with properties and functions
 var game = {
     winAudio: new Audio('assets/audio/win.mp3'),
     loseAudio: new Audio('assets/audio/lose.mp3'),
+    timesUpAudio: new Audio('assets/audio/times_up.wav'),
+    startAudio: new Audio('assets/audio/start.wav'),
     winPic: 'assets/images/win.gif',
     losePic: 'assets/images/lose.gif',
+    timesUpPic: 'assets/images/timesup.jpg',
+    gameOverPic: 'assets/images/gameover.jpg',
 
     questions: [
-        {
-            question: 'What does Elaine call the passenger she is sitting next to on the plane?',
-            answers: ['Meatball', 'Vegetable Lasagna', 'TV Dinner'],
-            image: 'assets/images/question1.png',
-            correct: 'Vegetable Lasagna'
-        },
         {
             question: 'Who won "The Contest" even though they cheated?',
             answers: ['George', 'Jerry', 'Kramer'],
@@ -42,51 +44,113 @@ var game = {
             correct: 'Del Boca Vista'
 
         },
+        {
+            question: 'What does Elaine call the passenger she is sitting next to on the plane?',
+            answers: ['Meatball', 'Vegetable Lasagna', 'TV Dinner'],
+            image: 'assets/images/question1.png',
+            correct: 'Vegetable Lasagna'
+        }
     ],
 
     drawButtons: function () {
-
         for (var i = 0; i < this.questions[questionNumber].answers.length; i++) {
             var button = $('<button>');
             button.addClass('answers');
             button.text(this.questions[questionNumber].answers[i]);
             $('#gameplay').append(button);
-            
         }
     },
 
+    decrementCounter: function () {
+        counter--;
+        $('#timer').text(counter);
+        if (counter == 0) {
+            game.outOfTime();
+        }
+    },
+
+    decrementNext: function () {
+        next--;
+        //$('#directions').text(next + ' seconds until the next quetion');
+        if (next == 0) {
+            game.stop();
+            game.playGame();
+        }
+    },
+
+    outOfTime: function () {
+        $('.main-pic').attr('src', game.timesUpPic);
+        this.timesUpAudio.play();
+        $('#gameplay').empty();
+        $('#timer').empty();
+        this.stop();
+        $('#question').text('Times up! The correct answer is: ' + this.questions[questionNumber].correct);
+        this.nextTimer();
+    },
+
+    questionTimer: function () {
+        $('#timer').text(counter);
+        intervalID = setInterval(this.decrementCounter, 1000);
+    },
+
+    nextTimer: function () {
+        next = 3
+        questionNumber++;
+        if (questionNumber == this.questions.length) {
+            $('#question').text("You got " + questionsRight + " out of " + this.questions.length + ' right');
+            $('.main-pic').attr('src', this.gameOverPic);
+            $('#gameplay').append($('<button id="play-again">Play Again!</button>'));
+            $(document).on("click", "#play-again", function () {
+                location.reload();
+            })
+        }
+        else {
+            intervalID = setInterval(this.decrementNext, 1000);
+            //$('#gameplay').append($('<h2 id="directions">'));
+            //$('#directions').text(next + ' seconds until the next question');
+        }
+    },
+
+    stop: function () {
+        clearInterval(intervalID);
+    },
+
+    playGame: function () {
+        $('#question').text('Question ' + (questionNumber + 1) + ': ' + this.questions[questionNumber].question);
+        $('#gameplay').empty();
+        $('.main-pic').attr('src', this.questions[questionNumber].image);
+        this.drawButtons();
+        counter = 10;
+        this.questionTimer();
+    }
 };
 
-
-$(".main-pic").on("click", function () {
-    //theme.play();
-    $('#question').text('Question ' + (questionNumber + 1) + ': ' + game.questions[questionNumber].question);
-    $('#gameplay').empty();
-    $('.main-pic').attr('src', game.questions[questionNumber].image);
-    $('.main-pic').css('cursor', 'default')
-    game.drawButtons();
+//event listener for clicking the start button
+$("#directions").on("click", function () {
+    theme.volume = 0.1;
+    theme.play();
+    game.startAudio.play();
+    game.playGame();
 });
 
-$(document).on("click", ".answers", function() {
+//event listener for clicking on the answer buttons
+$(document).on("click", ".answers", function () {
     if ($(this).text() == game.questions[questionNumber].correct) {
         game.winAudio.play();
         $('.main-pic').attr('src', game.winPic);
         $('#gameplay').empty();
         $('#question').text('YOU GOT IT!');
         questionsRight++;
+        game.stop();
     }
     else {
         game.loseAudio.play();
         $('.main-pic').attr('src', game.losePic);
         $('#gameplay').empty();
-        $('#question').text('The correct answer is: ' + game.questions[questionNumber].correct);
+        $('#question').text('Wrong! The correct answer is: ' + game.questions[questionNumber].correct);
+        game.stop();
     }
 
-    $('#gameplay').append($('<h2 id="directions">'));
-    $('#directions').text('Click the picture to answer the next question!');
-    $('.main-pic').css('cursor', 'pointer')
-
-    questionNumber++;
-
+    $('#timer').empty();
+    game.nextTimer();
 });
-

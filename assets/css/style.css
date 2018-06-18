@@ -4,13 +4,12 @@
     }
 
 .main-pic {
-    border: 1px solid; 
     display: block;
+    border: 1px solid; 
     margin-left: auto; 
     margin-right:auto;
     height: 300px;
     width: auto;
-    cursor: pointer;
 }
 
 body {
@@ -30,24 +29,27 @@ h1 {
     letter-spacing: 5px;
 }
 
-h2, h3 {
+h2 {
     text-align: center;
     width: 500px;
     margin-left: auto;
     margin-right:auto;
 }
 
-button {
-    margin: 20px;
-    font-weight: bold;
-    font-size: 18px;
+h3 {
+    margin-top: -48px;
+    text-align: right;
+    margin-right: -7.5px;
+    color: rgb(63, 127, 236);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 48px;
+
 }
-
-
 
 p {
     text-align: center;
     font-size: 18px;
+    font-weight:bold;
 }
 
 #container {
@@ -65,9 +67,28 @@ p {
 }
 
 #gameplay {
+    margin-top: 10px;
     text-align: center;
 }
 
 #question {
     margin-top: -20px;
+}
+
+button {
+    color: black;
+    padding: 10px;
+    border: 2px solid black;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    margin: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: black; 
+    color: rgba(208, 208, 209);
+    cursor: pointer;
 }
