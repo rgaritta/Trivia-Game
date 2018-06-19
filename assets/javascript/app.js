@@ -24,7 +24,7 @@ var game = {
             correct: 'George'
         },
         {
-            question: 'Which holiday was created by George Costanza?',
+            question: 'Which holiday was created by Frank Costanza?',
             answers: ['Christmas', 'Hanukkah', 'Festivus'],
             image: 'assets/images/question3.jpg',
             correct: 'Festivus'
