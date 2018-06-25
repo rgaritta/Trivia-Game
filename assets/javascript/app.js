@@ -11,10 +11,10 @@ var game = {
     loseAudio: new Audio('assets/audio/lose.mp3'),
     timesUpAudio: new Audio('assets/audio/times_up.wav'),
     startAudio: new Audio('assets/audio/start.wav'),
-    winPic: 'assets/images/win.gif',
-    losePic: 'assets/images/lose.gif',
-    timesUpPic: 'assets/images/timesup.jpg',
-    gameOverPic: 'assets/images/gameover.jpg',
+    winPic: new Image().src='assets/images/win.gif',
+    losePic: new Image().src='assets/images/lose.gif',
+    timesUpPic: new Image().src='assets/images/timesup.jpg',
+    gameOverPic: new Image().src='assets/images/gameover.jpg',
 
     questions: [
         {
